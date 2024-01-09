@@ -1,0 +1,7 @@
+1. oldal:
+	Akasztófa játék: A játék elég egyszerû van egy segítség felül hogy milyen körben kell kitalálnod a megadott titkos szót.
+			 A négyzetben látható az akasztófa azon fog lógni az emberke ha nem találod ki a szót, 6 lehetõséget kapsz találgatni és a hetedikre vége a játéknak.
+3. oldal:
+	Balog Bence Zsigmond, Csík Szabolcs Alex 
+	Csík Szabolcs készítette a script részét, Balog Bence a style, a html és a githubos részt kezelte.
+		

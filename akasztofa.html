@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akasztófa</title>
+
+    <style>
+        li:hover{
+            background-color: lightblue;
+        }
+        ul{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: rgb(15, 22, 121);
+        }
+        li{
+            float: left;
+        }
+        li a{
+            display: block;
+            color: whitesmoke;
+            text-align: center;
+            padding: 10px 10px;
+            text-decoration: none;
+        }
+        body {  background-color: #1f2937; font-family: "Poppins", sans-serif; }
+        h3 {   text-align: center;  font-size: 25px;  margin-top: 10px;}
+        p {  text-align: center; }
+        .container {
+            max-width: 400px;
+            min-height: 500px;
+            background-color: #334155;
+            margin: 5px auto;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .emberke {  display: none;}
+        .emberke-container {
+            
+            width: 200px;
+            height: 250px;
+            border: 2px solid lightblue;
+            margin: 5px;
+            stroke-width: 4PX;
+            stroke: lightblue;
+            stroke-linecap: round;
+            fill: transparent;
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .szam1 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .szam1 span:hover {  background-color: #4b5563;  }
+        .szam1 span {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #1f2937;
+            margin: 2px;
+            border-radius: 2.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e5e7eb;
+            transition: 0.2s;
+        }
+
+        .szam2 {  text-align: center; margin-top: 10px;}
+        .szam2 span {  margin: 2px; padding: 3px; font-size: 1.5rem;}
+        #szin{
+            color: white;
+        }
+
+    </style>
+    
+    
+</head>
+
+<body>    
+    <ul>
+        <li ><a href="fooldal.html">Leírás</a></li>
+        <li><a href="akasztofa.html">Játék</a></li>
+        <li><a href="keszitok.html">Készítők</a></li>
+    </ul>
+
+    <div class="container">
+        <h3 id="szin">Akasztófa játék</h3>
+        <p id="szin">(Segítség: ezek mind gyümölcsök)</p>
+        <svg class="emberke-container">
+            <line x1="20" x2="100" y1="230" Y2="230" />
+            <line x1="60" x2="60" y1="20" Y2="230" />
+            <line x1="60" x2="150" y1="20" Y2="20" />
+            <line x1="150" x2="150" y1="20" Y2="55" />
+
+            <circle class="emberke" id="1" cx="150" cy="75" r="18" />
+            <line class="emberke" id="2" x1="150" x2="150" y1="95" Y2="160" />
+            <line class="emberke" id="3" x1="150" x2="120" y1="125" Y2="100" />
+            <line class="emberke" id="4" x1="150" x2="180" y1="125" Y2="100" />
+            <line class="emberke" id="5" x1="150" x2="175" y1="160" Y2="190" />
+            <line class="emberke" id="6" x1="150" x2="125" y1="160" Y2="190" />
+        </svg>
+        <div class="szam1" onclick="katt(event)"></div>
+        <div class="szam2" id="szin"></div>
+        <div class="status" id="szin"></div>
+    </div>
+    <script>
+        const szavak=['alma','citrom','narancs','ananász','paradicsom','körte','uborka','szőlő'];
+        const abc = ['A', 'Á', 'B', 'C', 'D', 'E', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L', 'M', 'N', 'O', 'Ó', 'Ö', 'Ő', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ü', 'Ű', 'V', 'W', 'X', 'Y', 'Z'];
+
+        abc.forEach(char => document.querySelector('.szam1').innerHTML += `<span>${char}</span>`)
+
+        const random = (i) => {
+            const randIndex = Math.floor(Math.random() * i.length)
+            return szavak[randIndex]
+        }
+        let idk = random(szavak)
+
+        let betuk = idk.split('');
+        let hiba = 0;
+        let szavakk= betuk.map(char => '_');
+        function szavakmegjel() { document.querySelector('.szam2').innerHTML = szavakk.map(char => `<span>${char}<span>`).join(''); }
+        szavakmegjel()
+
+        function katt(e) {
+            if (e.target.tagName != 'SPAN') return
+            let kivalasztott = e.target.innerText
+            let hibas = false
+            for (let i in betuk) {
+                if (betuk[i].toUpperCase() == kivalasztott) {
+                    szavakk[i] = kivalasztott;
+                    hibas = true;
+                }
+                szavakmegjel()
+            }
+
+            hiba = hibas ? hiba : ++hiba
+            if (hiba > 0 && hiba <= 6)  document.getElementById(hiba).style.display = 'block';
+            if (hiba == 6) {
+                document.querySelector(".status").innerHTML = "<p>Sajnálom, elvesztetted a játékot!</p>";
+                document.querySelector(".status").innerHTML = "<p>A helyes megoldás: "+idk+"</p>" ;
+                return
+            }
+            if (szavakk.indexOf('_') == -1) document.querySelector(".status").innerHTML = "<p>Gratulálok, sikerült megoldani!</p>";
+            
+        }
+    </script>
+
+
+</body>
+</html>
